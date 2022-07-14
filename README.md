@@ -1,3 +1,3 @@
-# next-typescript-rzbzdj
+# Recommendation NFT
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/next-typescript-rzbzdj)
+Get your recommendations on the blockchain and show off your achievements with ease!
