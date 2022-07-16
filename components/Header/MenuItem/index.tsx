@@ -1,18 +1,18 @@
-import { Link, Text, BoxProps } from '@chakra-ui/react'
+import { Link, Text, BoxProps } from "@chakra-ui/react";
 
 interface MenuItemProps extends BoxProps {
-	isLast?: boolean
-	to: string
+  isLast?: boolean;
+  to: string;
 }
 
-const MenuItem = ({ children, isLast, to = '/', ...rest }: MenuItemProps) => {
-	return (
-		<Link href={to}>
-			<Text display="block" {...rest}>
-				{children}
-			</Text>
-		</Link>
-	)
-}
+const MenuItem = ({ children, isLast, to = "/", ...rest }: MenuItemProps) => {
+  return (
+    <Link href={to} _hover={{ textDecoration: "none", fontWeight: "bold" }}>
+      <Text display="block" {...rest}>
+        {children}
+      </Text>
+    </Link>
+  );
+};
 
-export default MenuItem
+export default MenuItem;
