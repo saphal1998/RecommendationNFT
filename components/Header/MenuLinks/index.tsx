@@ -1,31 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MenuItem from '../MenuItem';
-import { Box, Stack, Button } from '@chakra-ui/react';
-import { useMetamask } from 'use-metamask';
-import 'regenerator-runtime';
-import { ethers } from 'ethers';
+import { Box, Stack, Button, useDisclosure } from '@chakra-ui/react';
+import { useWeb3React } from '@web3-react/core';
+import { injected } from '../../../utils/connectors';
 
 interface MenuLinkProps {
   isOpen: boolean;
 }
 
 const ConnectWalletButton = () => {
-  const { connect, metaState } = useMetamask();
+  const { activate, account, active, deactivate } = useWeb3React();
 
-  const connectWalletOnClick = (event) => {
-    event.preventDefault();
-    if (!metaState.isConnected && window.ethereum) {
-      (async () => {
-        const web3 = new ethers.providers.Web3Provider(window.ethereum, 'any');
-        console.log({ web3 });
-        try {
-          await connect(web3);
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }
-  };
+  const connectWalletOnClick: React.MouseEventHandler<HTMLButtonElement> =
+    async (event) => {
+      event.preventDefault();
+      if (!account) {
+        await activate(injected);
+      } else {
+        deactivate();
+      }
+    };
 
   return (
     <Button
@@ -39,18 +33,9 @@ const ConnectWalletButton = () => {
       }}
       onClick={connectWalletOnClick}
     >
-      Connect Wallet
+      {active ? account : 'Connect Wallet'}
     </Button>
   );
-};
-
-const NoSSR = ({ children }: { children: React.ReactNode }) => {
-  const [mountedState, setMountedState] = React.useState(false);
-
-  React.useEffect(() => {
-    setMountedState(true);
-  }, []);
-  return <>{mountedState ? children : null}</>;
 };
 
 const MenuLinks = ({ isOpen }: MenuLinkProps) => {
@@ -68,9 +53,7 @@ const MenuLinks = ({ isOpen }: MenuLinkProps) => {
       >
         <MenuItem to="/">Home</MenuItem>
         <MenuItem isLast={true}>
-          <NoSSR>
-            <ConnectWalletButton />
-          </NoSSR>
+          <ConnectWalletButton />
         </MenuItem>
       </Stack>
     </Box>
