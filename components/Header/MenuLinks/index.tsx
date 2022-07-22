@@ -9,19 +9,6 @@ interface MenuLinkProps {
   isOpen: boolean;
 }
 
-const OurFallbackComponent = ({
-  error,
-  componentStack,
-  resetErrorBoundary,
-}) => {
-  return (
-    <div>
-      <h1>An error occurred: {error.message}</h1>
-      <button onClick={resetErrorBoundary}>Try again</button>
-    </div>
-  );
-};
-
 const ConnectWalletButton = () => {
   const { activate, account, active, deactivate } = useWeb3React();
 
