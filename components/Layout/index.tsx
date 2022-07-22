@@ -1,5 +1,12 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  // Alert,
+  // AlertIcon,
+  // AlertTitle,
+  // AlertDescription,
+} from '@chakra-ui/react';
 import Head from 'next/head';
+// import { ErrorBoundary } from 'react-error-boundary';
 import theme from '../../utils/theme';
 import Header from '../Header';
 import { Web3ReactProvider } from '@web3-react/core';
@@ -19,10 +26,22 @@ const getLibrary = (
   return library;
 };
 
+// const ErrorState = () => {
+//   console.log('ErrorState called');
+//   return (
+//     <Alert status="error">
+//       <AlertIcon />
+//       <AlertTitle mr={2}>An error occured!</AlertTitle>
+//       <AlertDescription>Please contact us for assistance.</AlertDescription>
+//     </Alert>
+//   );
+// };
+
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <ChakraProvider theme={theme}>
+        {/* <ErrorBoundary FallbackComponent={ErrorState}> */}
         <Web3ReactProvider getLibrary={getLibrary}>
           <Head>
             <title>Recommender</title>
@@ -32,6 +51,7 @@ export default function Layout({ children }: LayoutProps) {
           <main>{children}</main>
           <div> Footer </div>
         </Web3ReactProvider>
+        {/* </ErrorBoundary> */}
       </ChakraProvider>
     </>
   );

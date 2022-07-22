@@ -1,5 +1,4 @@
 import React from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import MenuItem from '../MenuItem';
 import { Box, Stack, Button } from '@chakra-ui/react';
 import { useWeb3React } from '@web3-react/core';
@@ -25,21 +24,19 @@ const ConnectWalletButton = () => {
     };
 
   return (
-    <ErrorBoundary>
-      <Button
-        size="sm"
-        rounded="md"
-        color={['primary.500']}
-        bg={['white']}
-        _hover={{
-          bg: ['primary.100'],
-          decoration: 'none',
-        }}
-        onClick={connectWalletOnClick}
-      >
-        {active ? account : 'Connect Wallet'}
-      </Button>
-    </ErrorBoundary>
+    <Button
+      size="sm"
+      rounded="md"
+      color={['primary.500']}
+      bg={['white']}
+      _hover={{
+        bg: ['primary.100'],
+        decoration: 'none',
+      }}
+      onClick={connectWalletOnClick}
+    >
+      {active ? account : 'Connect Wallet'}
+    </Button>
   );
 };
 
