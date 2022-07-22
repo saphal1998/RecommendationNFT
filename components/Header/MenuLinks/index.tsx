@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import MenuItem from '../MenuItem';
-import { Box, Stack, Button, useDisclosure } from '@chakra-ui/react';
+import { Box, Stack, Button } from '@chakra-ui/react';
 import { useWeb3React } from '@web3-react/core';
 import { injected } from '../../../utils/connectors';
 
 interface MenuLinkProps {
   isOpen: boolean;
 }
+
+const OurFallbackComponent = ({
+  error,
+  componentStack,
+  resetErrorBoundary,
+}) => {
+  return (
+    <div>
+      <h1>An error occurred: {error.message}</h1>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  );
+};
 
 const ConnectWalletButton = () => {
   const { activate, account, active, deactivate } = useWeb3React();
@@ -15,26 +29,30 @@ const ConnectWalletButton = () => {
     async (event) => {
       event.preventDefault();
       if (!account) {
-        await activate(injected);
+        await activate(injected, (error: Error) => {
+          throw error;
+        });
       } else {
         deactivate();
       }
     };
 
   return (
-    <Button
-      size="sm"
-      rounded="md"
-      color={['primary.500']}
-      bg={['white']}
-      _hover={{
-        bg: ['primary.100'],
-        decoration: 'none',
-      }}
-      onClick={connectWalletOnClick}
-    >
-      {active ? account : 'Connect Wallet'}
-    </Button>
+    <ErrorBoundary>
+      <Button
+        size="sm"
+        rounded="md"
+        color={['primary.500']}
+        bg={['white']}
+        _hover={{
+          bg: ['primary.100'],
+          decoration: 'none',
+        }}
+        onClick={connectWalletOnClick}
+      >
+        {active ? account : 'Connect Wallet'}
+      </Button>
+    </ErrorBoundary>
   );
 };
 

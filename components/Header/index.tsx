@@ -1,9 +1,9 @@
-import React from "react";
-import { FlexProps } from "@chakra-ui/react";
-import MenuToggle from "./MenuToggle";
-import MenuLinks from "./MenuLinks";
-import NavBarContainer from "./NavBarContainer";
-import Logo from "./Logo";
+import React from 'react';
+import { FlexProps } from '@chakra-ui/react';
+import MenuToggle from './MenuToggle';
+import MenuLinks from './MenuLinks';
+import NavBarContainer from './NavBarContainer';
+import Logo from './Logo';
 
 const Header = (props: FlexProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -14,7 +14,7 @@ const Header = (props: FlexProps) => {
 
   return (
     <NavBarContainer {...props}>
-      <Logo w="125px" color={["white"]} />
+      <Logo w="125px" color={['white']} />
       <MenuToggle onToggle={onToggle} isOpen={isOpen} />
       <MenuLinks isOpen={isOpen} />
     </NavBarContainer>
